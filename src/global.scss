@@ -1,0 +1,12 @@
+@import './theme.scss';
+@import './fonts.scss';
+@import './elements.scss';
+@import './classes.scss';
+@import './mixins.scss';
+
+
+body {
+    font-family: $font-family-default;
+    background-color: var(--color-surface);
+    color: var(--color-text);
+}

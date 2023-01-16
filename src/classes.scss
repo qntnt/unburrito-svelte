@@ -1,0 +1,44 @@
+@import './colors.scss';
+@import './mixins.scss';
+
+// Hidden
+.hidden {
+    visibility: hidden;
+}
+
+.border {
+    @include border();
+    border-color: var(--color-border);
+}
+
+.interactive:hover {
+    cursor: pointer;
+}
+
+.interactive:disabled {
+    cursor: not-allowed;
+}
+
+// Text
+
+@each $color-name,
+$theme-colors in $all-colors {
+    @include colorVarClass(text, $color-name, color, color-#{$color-name});
+    @include colorVarClass(background, $color-name, background-color, color-#{$color-name});
+    @include colorVarClass(border, $color-name, border-color, color-#{$color-name});
+}
+
+$space-types: padding, margin;
+$directions: top, bottom, left, right;
+
+@each $name,
+$value in $sizes {
+    @each $space-type in $space-types {
+        $property-value: $value * $spacing-unit;
+        @include valClass($space-type, $name, #{$space-type}, $property-value);
+
+        @each $direction in $directions {
+            @include valClass(#{$space-type}-#{$direction}, $name, #{$space-type}-#{$direction}, $property-value);
+        }
+    }
+}

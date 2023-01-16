@@ -1,0 +1,171 @@
+@use 'sass:map';
+@import './theme.scss';
+
+
+@mixin defineColorAndVariationsVariables($name, $light: null, $dark: null) {
+    @include themeVar($name, $light, $dark: $dark);
+
+    @if $dark !=null {
+        @include themeVar(#{$name}-darker, darken($light, 10%), $dark: darken($dark, 10%));
+        @include themeVar(#{$name}-darkest, darken($light, 20%), $dark: darken($dark, 20%));
+        @include themeVar(#{$name}-lighter, lighten($light, 10%), $dark: lighten($dark, 10%));
+        @include themeVar(#{$name}-lightest, lighten($light, 20%), $dark: lighten($dark, 20%));
+    }
+
+    @else if $light !=null {
+
+        @include themeVar(#{$name}-darker, darken($light, 10%));
+        @include themeVar(#{$name}-darkest, darken($light, 20%));
+        @include themeVar(#{$name}-lighter, lighten($light, 10%));
+        @include themeVar(#{$name}-lightest, lighten($light, 20%));
+    }
+}
+
+@mixin defineColorVariables($color-map) {
+
+    @each $color-name,
+    $theme-colors in $color-map {
+
+        @include defineColorAndVariationsVariables(color-#{$color-name}, map.get($theme-colors, "light"), $dark: map.get($theme-colors, "dark"));
+    }
+}
+
+@mixin defineThemeVariables($defaultColorMaps, $highContrastColorMaps) {
+
+    @each $colorMap in $defaultColorMaps {
+        @include defineColorVariables($colorMap);
+    }
+
+    @each $colorMap in $highContrastColorMaps {
+        @include defineColorVariables($colorMap);
+    }
+}
+
+@function getThemeColor($colorMap, $name, $dark: false) {
+    $themeColors: map.get($colorMap, $name);
+
+    @if $dark {
+        @return map.get($themeColors, "dark");
+    }
+
+    @else {
+        @return map.get($themeColors, "light");
+    }
+}
+
+$base-colors: (
+    "purple": ("light": #722ed1, "dark": #722ed1),
+    "yellow": ("light": #fadb14, "dark": #fadb14),
+    "cyan": ("light": #08979c, "dark": #36cfc9),
+    "blue": ("light": #1677ff, "dark": #1677ff),
+    "red": ("light": #f5222d, "dark": #f5222d),
+    "orange": ("light": #d46b08, "dark": #ffa940),
+    "green": ("light": #389e0d, "dark": #73d13d),
+    "magenta": ("light": #eb2f96, "dark": #eb2f96),
+    "black": ("light": #1f1f1f, "dark": #1f1f1f),
+    "white": ("light": #f5f5f5, "dark": #f5f5f5),
+    "transparent": ("light": #00000000, "dark": #00000000),
+);
+
+$brand-colors: (
+    "primary": ("light": getThemeColor($base-colors, "cyan",
+            $dark: false),
+        "dark": getThemeColor($base-colors, "cyan", $dark: false),
+    ),
+    "secondary": ("light": getThemeColor($base-colors, "magenta",
+            $dark: false),
+        "dark": getThemeColor($base-colors, "magenta", $dark: false),
+    ),
+    "positive": ("light": getThemeColor($base-colors, "green",
+            $dark: false),
+        "dark": getThemeColor($base-colors, "green", $dark: false),
+    ),
+    "negative": ("light": getThemeColor($base-colors, "red",
+            $dark: false),
+        "dark": getThemeColor($base-colors, "red", $dark: false),
+    ),
+    "warning": ("light": getThemeColor($base-colors, "orange",
+            $dark: false),
+        "dark": getThemeColor($base-colors, "orange", $dark: false),
+    ),
+);
+
+$surface-colors: (
+    "surface": ("light": getThemeColor($base-colors, "white"),
+        "dark": getThemeColor($base-colors, "black"),
+    ),
+    "surface-inverted": ("light": getThemeColor($base-colors, "black"),
+        "dark": getThemeColor($base-colors, "white"),
+    ),
+);
+
+$text-colors: (
+    "text": ("light": getThemeColor($base-colors, "black"),
+        "dark": getThemeColor($base-colors, "white"),
+    ),
+    "text-inverted": ("light": getThemeColor($base-colors, "white"),
+        "dark": getThemeColor($base-colors, "black"),
+    ),
+    "text-interactive": map.get($brand-colors, "secondary"),
+    "text-disabled": ("light": fade-out(getThemeColor($base-colors, "black"), 0.4),
+        "dark": fade-out(getThemeColor($base-colors, "white"), 0.4),
+    ),
+);
+
+$border-colors: (
+    "border": ("light": fade-out(getThemeColor($base-colors, "black"), 0.8),
+        "dark": fade-out(getThemeColor($base-colors, "white"), 0.8),
+    ),
+);
+
+$overlay-colors: (
+    "overlay": ("light": fade-out(getThemeColor($base-colors, "white"), 0.4),
+        "dark": fade-out(getThemeColor($base-colors, "black"), 0.4),
+    ),
+);
+
+@include defineThemeVariables(($base-colors, $brand-colors), ($surface-colors, $text-colors, $border-colors, $overlay-colors));
+
+$default-colors: map.merge($base-colors, $brand-colors);
+$high-contrast-colors: map.merge($surface-colors, map.merge($border-colors, map.merge($overlay-colors, $text-colors)));
+$all-colors: map.merge($default-colors, $high-contrast-colors);
+
+$color-modifiers: hover disabled;
+
+@mixin varClass($prefix, $name, $property, $var) {
+    .#{""+$prefix}-#{""+$name} {
+        #{$property}: var(--#{$var});
+
+    }
+
+    @each $modifier in $color-modifiers {
+        .#{$modifier}-#{""+$prefix}-#{""+$name} {
+            &:#{$modifier} {
+                #{$property}: var(--#{$var});
+            }
+        }
+    }
+}
+
+@mixin colorVarClass($prefix, $name, $property, $var) {
+    @include varClass($prefix, $name, $property, $var);
+    @include varClass($prefix, #{$name}-darker, $property, #{$var}-darker);
+    @include varClass($prefix, #{$name}-darkest, $property, #{$var}-darkest);
+    @include varClass($prefix, #{$name}-lighter, $property, #{$var}-lighter);
+    @include varClass($prefix, #{$name}-lightest, $property, #{$var}-lightest);
+}
+
+@mixin valClass($prefix, $name, $property, $val) {
+    .#{""+$prefix}-#{""+$name} {
+        #{$property}: $val;
+
+    }
+
+    @each $modifier in $color-modifiers {
+        .#{$modifier}-#{""+$prefix}-#{""+$name} {
+            &:#{$modifier} {
+                #{$property}: $val;
+            }
+        }
+    }
+}

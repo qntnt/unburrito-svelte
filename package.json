@@ -24,13 +24,19 @@
 		"prettier-plugin-svelte": "^2.8.1",
 		"svelte": "^3.54.0",
 		"svelte-check": "^2.9.2",
+		"svelte-preprocess": "^5.0.0",
+		"svelte-preprocess-import-assets": "^0.2.5",
 		"tslib": "^2.4.1",
 		"typescript": "^4.9.3",
 		"vite": "^4.0.0",
+		"vite-imagetools": "^4.0.14",
 		"vitest": "^0.25.3"
 	},
 	"type": "module",
 	"dependencies": {
-		"unburrito": "^1.0.1"
+		"normalize.css": "^8.0.1",
+		"rxjs": "^7.8.0",
+		"sass": "^1.57.1",
+		"unburrito": "^1.0.3"
 	}
 }
