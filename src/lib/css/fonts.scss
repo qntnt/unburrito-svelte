@@ -19,3 +19,8 @@ $font-family-headline: 'Knewave',
     'Arial Narrow',
     Arial,
     sans-serif;
+
+:root {
+    --font-family-default: $font-family-default;
+    --font-family-headline: $font-family-headline;
+}

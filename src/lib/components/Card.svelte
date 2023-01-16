@@ -29,6 +29,7 @@
 </div>
 
 <style lang="scss">
+  @import '../css/mixins.scss';
   .card {
     @include border();
     @include surface($type: lighter);

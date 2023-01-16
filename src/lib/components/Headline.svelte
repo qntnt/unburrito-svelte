@@ -18,8 +18,7 @@
 <style lang="scss">
   .headline {
     position: relative;
-    font-family: $font-family-headline;
-    min-height: $spacing-default * 8;
+    font-family: var(--font-family-headline);
   }
   .content {
     z-index: 1;

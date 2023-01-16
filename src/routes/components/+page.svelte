@@ -296,6 +296,7 @@
 </Container>
 
 <style global lang="scss">
+  @import '../../lib/css/mixins.scss';
   .spacer-label {
     @include border();
     @include surface($type: inverted);

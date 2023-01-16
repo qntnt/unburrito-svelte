@@ -5,6 +5,4 @@
 <slot />
 
 <style global lang="scss">
-  @import 'normalize.css';
-  @import '../global.scss';
 </style>

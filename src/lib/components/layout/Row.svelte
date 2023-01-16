@@ -15,6 +15,7 @@
 </FlexList>
 
 <style global lang="scss">
+  @import '../../css/sizes.scss';
   .row {
     width: 100%;
     flex-direction: row;

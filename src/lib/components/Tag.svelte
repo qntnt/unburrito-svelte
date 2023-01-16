@@ -19,8 +19,9 @@
 >
 
 <style lang="scss">
+  @import '../css/mixins.scss';
   .tag {
     @include border();
-    padding: $spacing-xxs;
+    padding: var(--spacing-xxs);
   }
 </style>

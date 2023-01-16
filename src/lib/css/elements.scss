@@ -21,19 +21,19 @@ h2 {
 }
 
 h1 {
-    font-size: $font-size-xxl;
+    font-size: var(--font-size-xxl);
 }
 
 h2 {
-    font-size: $font-size-xl;
+    font-size: var(--font-size-xl);
 }
 
 h3 {
-    font-size: $font-size-l;
+    font-size: var(--font-size-l);
 }
 
 h3 {
-    font-size: $font-size-m;
+    font-size: var(--font-size-m);
 }
 
 // Horizontal Rules
@@ -42,7 +42,7 @@ hr {
     border-left: 0;
     border-right: 0;
     border-bottom: 0;
-    border-top-width: $border-width;
+    border-top-width: var(--border-width);
     border-style: solid;
     border-color: var(--color-border);
 }

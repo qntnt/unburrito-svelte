@@ -9,14 +9,15 @@ const config = {
 	preprocess: [
 		sveltePreprocess({
 			scss: {
-				prependData: '@use "sass:math";\n@use "sass:list";\n@use "sass:color";\n@import "./src/mixins.scss";\n@import "./src/fonts.scss";',
+				prependData: '@use "sass:math";\n@use "sass:list";\n@use "sass:color";',
 			},
 		}),
 		importAssets(),
 	],
-
+	
 	kit: {
-		adapter: adapter()
+		adapter: adapter(),
+		
 	},
 };
 

@@ -25,13 +25,14 @@
 </button>
 
 <style lang="scss">
+  @import '../css/mixins.scss';
   button {
     @include border();
-    border-top-right-radius: $spacing-l;
-    border-bottom-left-radius: $spacing-l;
-    border-top-left-radius: $spacing-xl;
-    border-bottom-right-radius: $spacing-xl;
-    border-width: $border-width * 2;
+    border-top-right-radius: var(--spacing-l);
+    border-bottom-left-radius: var(--spacing-l);
+    border-top-left-radius: var(--spacing-xl);
+    border-bottom-right-radius: var(--spacing-xl);
+    border-width: var(--border-width);
 
     font-weight: bold;
   }

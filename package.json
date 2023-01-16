@@ -4,6 +4,7 @@
 	"scripts": {
 		"dev": "vite dev",
 		"build": "svelte-kit sync && svelte-package",
+		"packageCss": "sa",
 		"prepublishOnly": "echo 'Did you mean to publish `./package/`, instead of `./`?' && exit 1",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
@@ -32,13 +33,11 @@
 		"vitest": "^0.25.3"
 	},
 	"type": "module",
-	"peerDependencies": {
-		"unburrito": "^1.0.3"
-	},
 	"dependencies": {
 		"svelte": "^3.54.0",
 		"normalize.css": "^8.0.1",
 		"rxjs": "^7.8.0",
-		"sass": "^1.57.1"
+		"sass": "^1.57.1",
+		"unburrito": "^1.0.3"
 	}
 }

@@ -35,6 +35,7 @@
 {/each}
 
 <style lang="scss">
+  @import '../../css/sizes.scss';
   div {
     background-color: var(--color-text);
     min-height: 1rem;

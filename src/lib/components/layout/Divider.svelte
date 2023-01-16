@@ -14,6 +14,7 @@
 <div class={`divider ${orientationClass} ${spacingClass} ${hiddenClass}`} />
 
 <style lang="scss">
+  @import '../../css/sizes.scss';
   .divider {
     background-color: var(--color-border);
   }

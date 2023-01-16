@@ -3,6 +3,8 @@
 </div>
 
 <style lang="scss">
+  @import '../../css/sizes.scss';
+
   .container {
     height: 100%;
     margin-left: auto;
