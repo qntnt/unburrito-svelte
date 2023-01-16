@@ -22,7 +22,6 @@
 		"eslint-plugin-svelte3": "^4.0.0",
 		"prettier": "^2.8.0",
 		"prettier-plugin-svelte": "^2.8.1",
-		"svelte": "^3.54.0",
 		"svelte-check": "^2.9.2",
 		"svelte-preprocess": "^5.0.0",
 		"svelte-preprocess-import-assets": "^0.2.5",
@@ -33,10 +32,13 @@
 		"vitest": "^0.25.3"
 	},
 	"type": "module",
+	"peerDependencies": {
+		"unburrito": "^1.0.3"
+	},
 	"dependencies": {
+		"svelte": "^3.54.0",
 		"normalize.css": "^8.0.1",
 		"rxjs": "^7.8.0",
-		"sass": "^1.57.1",
-		"unburrito": "^1.0.3"
+		"sass": "^1.57.1"
 	}
 }
