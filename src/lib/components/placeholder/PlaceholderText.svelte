@@ -31,16 +31,5 @@
 </script>
 
 {#each lineDefs as lineDef}
-  <div style={lineDef.style} class={lineDef.divide ? 'divide' : undefined} />
+  <div class="h-4 bg-neutral-500 m-1" style={lineDef.style} />
 {/each}
-
-<style lang="scss">
-  @import '../../css/sizes.scss';
-  div {
-    background-color: var(--color-text);
-    min-height: 1rem;
-  }
-  .divide {
-    margin-top: $spacing-xs;
-  }
-</style>

@@ -1,39 +1,27 @@
 <script lang="ts">
-  import { getColorClass, type AnyColor, type TextColor } from '$lib/util/colors';
-  import { getSizeClass } from '$lib/util/sizes';
-
   export let onClick: (() => void) | undefined = undefined;
-  export let backgroundColor: AnyColor = 'surface';
-  export let textColor: AnyColor = 'text';
 
-  $: backgroundColorClass = onClick
-    ? getColorClass('background', backgroundColor)
-    : getColorClass('background', backgroundColor, 'darker');
-  $: hoverBackgroundColorClass = onClick
-    ? getColorClass('hover-background', backgroundColor, 'lighter')
-    : '';
-  $: textColorClass = getColorClass('text', textColor);
-  $: paddingClass = getSizeClass('padding', 's');
+  type Variant = 'default' | 'positive' | 'negative' | 'warning';
+  export let variant: Variant = 'default';
+  function getVariantClass(_variant: Variant) {
+    switch (_variant) {
+      case 'default':
+        return 'bg-neutral-100 hover:bg-neutral-50 active:bg-neutral-200 disabled:bg-neutral-200';
+      case 'positive':
+        return 'bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-800 disabled:bg-emerald-800 text-neutral-50';
+      case 'negative':
+        return 'bg-red-600 hover:bg-red-500 active:bg-red-800 disabled:bg-red-800 text-neutral-50';
+      case 'warning':
+        return 'bg-amber-600 hover:bg-amber-500 active:bg-amber-800 disabled:bg-amber-800 text-neutral-50';
+    }
+  }
+  $: variantClass = getVariantClass(variant);
 </script>
 
 <button
-  class={`interactive ${backgroundColorClass} ${textColorClass} ${paddingClass} ${hoverBackgroundColorClass}`}
+  class={`rounded border border-inherit px-2 py-1 ${variantClass} disabled:cursor-not-allowed`}
   on:click={onClick}
   disabled={onClick === undefined}
 >
   <slot />
 </button>
-
-<style lang="scss">
-  @import '../css/mixins.scss';
-  button {
-    @include border();
-    border-top-right-radius: var(--spacing-l);
-    border-bottom-left-radius: var(--spacing-l);
-    border-top-left-radius: var(--spacing-xl);
-    border-bottom-right-radius: var(--spacing-xl);
-    border-width: var(--border-width);
-
-    font-weight: bold;
-  }
-</style>

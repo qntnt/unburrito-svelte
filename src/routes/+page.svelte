@@ -6,7 +6,8 @@
   import Collect from '$lib/Collect.svelte';
   import Last from '$lib/Last.svelte';
   import { interval, throwError, delay, from, merge, mergeMap, NEVER, map } from 'rxjs';
-  import Row from '$lib/components/layout/Row.svelte';
+  import Flex from '$lib/components/layout/Flex.svelte';
+  import Tag from '$lib/components/Tag.svelte';
   function fetchUser(time: number) {
     return new Promise((resolve) => {
       setTimeout(() => resolve({ userId: 1, name: 'Tom Jones' }), time);
@@ -38,38 +39,46 @@
 <Container>
   <h2>Collect</h2>
   <CodeExample
-    code={`<Collect source={[1, 2, 3]}>
-    <svelte:fragment slot="value" let:value>{value}</svelte:fragment>
-</Collect>`}
+    code={`<Flex direction="row">
+  <Collect source={[1, 2, 3]}>
+    <svelte:fragment slot="value" let:value>
+      <Tag>{value}</Tag>
+    </svelte:fragment>
+  </Collect>
+</Flex>`}
   >
-    <Collect source={[1, 2, 3]}>
-      <svelte:fragment slot="value" let:value>{value}</svelte:fragment>
-    </Collect>
+    <Flex direction="row">
+      <Collect source={[1, 2, 3]}>
+        <svelte:fragment slot="value" let:value>
+          <Tag>{value}</Tag>
+        </svelte:fragment>
+      </Collect>
+    </Flex>
   </CodeExample>
 
   <CodeExample
-    code={`<Row>
-    <Collect source={interval(1000)}>
-        <svelte:fragment slot="value" let:value>
-            <Card>{value}</Card>
-        </svelte:fragment>
-    </Collect>
-</Row>`}
+    code={`<Flex overflow="nowrap" direction="row">
+  <Collect source={interval(1000)}>
+    <svelte:fragment slot="value" let:value>
+      <Tag>{value}</Tag>
+    </svelte:fragment>
+  </Collect>
+</Flex>`}
   >
-    <Row overflow="scroll">
+    <Flex overflow="nowrap" direction="row">
       <Collect source={interval(1000)}>
         <svelte:fragment slot="value" let:value>
-          <Card>{value}</Card>
+          <Tag>{value}</Tag>
         </svelte:fragment>
       </Collect>
-    </Row>
+    </Flex>
   </CodeExample>
 
   <h2>Last</h2>
   <h3>Loading</h3>
   <CodeExample
     code={`<Last source={NEVER}>
-    <span slot="empty">Loading...</span>
+  <span slot="empty">Loading...</span>
 </Last>`}
   >
     <Last source={NEVER}>
@@ -80,10 +89,10 @@
   <h3>Observable</h3>
   <CodeExample
     code={`<Last source={interval(1000)}>
-    <span slot="empty">Loading...</span>
-    <span slot="value" let:value>
-        {value.toString()}
-    </span>
+  <span slot="empty">Loading...</span>
+  <span slot="value" let:value>
+    {value.toString()}
+  </span>
 </Last>`}
   >
     <Last source={interval(1000)}>
@@ -96,14 +105,14 @@
 
   <h3>Promise</h3>
   <CodeExample
-    code={`<Last source={fetchUser(3000)}> // delayed 3s
-    <span slot="empty">Loading...</span>
-    <span slot="value" let:value>
-        {value.toString()}
-    </span>
-    <div slot="error" let:error class="error">
-        {error.toString()}
-    </div>
+    code={`<Last source={fetchUser(3000)}>
+  <span slot="empty">Loading...</span>
+  <span slot="value" let:value>
+    {JSON.stringify(value)}
+  </span>
+  <div slot="error" let:error class="error">
+    {error.toString()}
+  </div>
 </Last>`}
   >
     <Last source={fetchUser(3000)}>
@@ -120,13 +129,13 @@
   <h3>Observable Error</h3>
   <CodeExample
     code={`<Last source={observeError()}>
-    <span slot="empty">Loading...</span>
-    <span slot="value" let:value>
-        {value.toString()}
-    </span>
-    <div slot="error" let:error class="error">
-        {error.message}
-    </div>
+  <span slot="empty">Loading...</span>
+  <span slot="value" let:value>
+    {value.toString()}
+  </span>
+  <div slot="error" let:error>
+    {error.message}
+  </div>
 </Last>`}
   >
     <Last source={observeError()}>
@@ -140,15 +149,3 @@
     </Last>
   </CodeExample>
 </Container>
-
-<style global>
-  .unburrito-empty {
-    color: var(--color-text-disabled);
-  }
-  .unburrito-value {
-    color: var(--color-text);
-  }
-  .unburrito-error {
-    color: red;
-  }
-</style>

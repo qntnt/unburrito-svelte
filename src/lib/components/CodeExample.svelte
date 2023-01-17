@@ -12,11 +12,4 @@
 </pre>
 
 <style lang="scss">
-  @import '../css/mixins.scss';
-  pre {
-    @include border();
-    @include surface($type: inverted);
-    padding: $spacing-m;
-    overflow-x: scroll;
-  }
 </style>

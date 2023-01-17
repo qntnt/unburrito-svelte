@@ -21,7 +21,7 @@
         right/300% 100%;
       animation: shimmer 2s infinite;
       content: '';
-      background-color: var(--color-overlay);
+      background-color: #fff5;
       position: absolute;
       top: 0;
       bottom: 0;

@@ -1,27 +1,23 @@
 <script lang="ts">
-  import { getColorClass, type AnyColor, type BaseColor } from '$lib/util/colors';
+  import { combineClasses } from '$lib/util/classes';
 
-  export let backgroundColor: AnyColor = 'surface-secondary';
-  export let textColor: AnyColor = 'text';
   export let onClick: (() => void) | undefined = undefined;
-
-  $: backgroundClass = getColorClass('background', backgroundColor);
-  $: hoverClass = onClick ? getColorClass('hover-background', backgroundColor, 'lighter') : '';
-  $: interactiveClass = onClick ? 'interactive' : '';
-
-  $: textClass = getColorClass('text', textColor);
+  type Variant = 'default' | 'positive' | 'negative' | 'warning';
+  export let variant: Variant = 'default';
+  function getVariantClass(_variant: Variant) {
+    switch (_variant) {
+      case 'default':
+        return '';
+      case 'positive':
+        return 'bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-800 disabled:bg-emerald-600  text-neutral-50';
+      case 'negative':
+        return 'bg-red-600 hover:bg-red-500 active:bg-red-800 disabled:bg-red-600  text-neutral-50';
+      case 'warning':
+        return 'bg-amber-600 hover:bg-amber-500 active:bg-amber-800 disabled:bg-amber-600  text-neutral-50';
+    }
+  }
+  $: variantClass = getVariantClass(variant);
+  $: clazz = combineClasses('rounded-full border border-inherit p-1 text-xs', variantClass);
 </script>
 
-<button
-  class={`tag ${backgroundClass} ${textClass} ${hoverClass} ${interactiveClass}`}
-  on:click={onClick}
-  disabled={onClick === undefined}><slot /></button
->
-
-<style lang="scss">
-  @import '../css/mixins.scss';
-  .tag {
-    @include border();
-    padding: var(--spacing-xxs);
-  }
-</style>
+<button class={clazz} on:click={onClick} disabled={onClick === undefined}><slot /></button>
